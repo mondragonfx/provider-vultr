@@ -1,4 +1,4 @@
-module github.com/upbound/upjet-provider-template
+module github.com/vultr/provider-vultr
 
 go 1.19
 

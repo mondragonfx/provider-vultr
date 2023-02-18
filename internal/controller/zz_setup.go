@@ -9,16 +9,16 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
-	resource "github.com/upbound/upjet-provider-template/internal/controller/null/resource"
-	providerconfig "github.com/upbound/upjet-provider-template/internal/controller/providerconfig"
+	providerconfig "github.com/vultr/provider-vultr/internal/controller/providerconfig"
+	kubernetes "github.com/vultr/provider-vultr/internal/controller/vultr/kubernetes"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
 		providerconfig.Setup,
+		kubernetes.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

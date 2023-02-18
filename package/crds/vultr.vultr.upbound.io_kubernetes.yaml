@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: resources.null.template.upbound.io
+  name: kubernetes.vultr.vultr.upbound.io
 spec:
-  group: null.template.upbound.io
+  group: vultr.vultr.upbound.io
   names:
     categories:
     - crossplane
     - managed
-    - template
-    kind: Resource
-    listKind: ResourceList
-    plural: resources
-    singular: resource
+    - vultr
+    kind: Kubernetes
+    listKind: KubernetesList
+    plural: kubernetes
+    singular: kubernetes
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Resource is the Schema for the Resources API. <no value>
+        description: Kubernetes is the Schema for the Kubernetess API. Provides a
+          Vultr Kubernetes Engine (VKE) resource. This can be used to create, read,
+          modify, and delete VKE clusters on your Vultr account.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +52,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ResourceSpec defines the desired state of Resource
+            description: KubernetesSpec defines the desired state of Kubernetes
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,13 +65,54 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  triggers:
-                    additionalProperties:
-                      type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
-                    type: object
+                  label:
+                    description: The VKE clusters label.
+                    type: string
+                  nodePools:
+                    description: Contains the default node pool that was deployed.
+                    items:
+                      properties:
+                        autoScaler:
+                          description: Enable the auto scaler for the default node
+                            pool.
+                          type: boolean
+                        label:
+                          description: The VKE clusters label.
+                          type: string
+                        maxNodes:
+                          description: The maximum number of nodes to use with the
+                            auto scaler.
+                          type: number
+                        minNodes:
+                          description: The minimum number of nodes to use with the
+                            auto scaler.
+                          type: number
+                        nodeQuantity:
+                          description: The number of nodes in this node pool.
+                          type: number
+                        plan:
+                          description: The plan to be used in this node pool. See
+                            Plans List Note the minimum plan requirements must have
+                            at least 1 core and 2 gbs of memory.
+                          type: string
+                      required:
+                      - label
+                      - nodeQuantity
+                      - plan
+                      type: object
+                    type: array
+                  region:
+                    description: The region your VKE cluster will be deployed in.
+                      Currently, supported values are ewr and lax
+                    type: string
+                  version:
+                    description: The version your VKE cluster you want deployed. See
+                      Available Version
+                    type: string
+                required:
+                - label
+                - region
+                - version
                 type: object
               providerConfigRef:
                 default:
@@ -243,11 +286,74 @@ spec:
             - forProvider
             type: object
           status:
-            description: ResourceStatus defines the observed state of Resource.
+            description: KubernetesStatus defines the observed state of Kubernetes.
             properties:
               atProvider:
                 properties:
+                  clusterSubnet:
+                    description: IP range that your pods will run on in this cluster.
+                    type: string
+                  dateCreated:
+                    description: Date of VKE cluster creation.
+                    type: string
+                  endpoint:
+                    description: Domain for your Kubernetes clusters control plane.
+                    type: string
                   id:
+                    description: The VKE cluster ID.
+                    type: string
+                  ip:
+                    description: IP address of VKE cluster control plane.
+                    type: string
+                  kubeConfig:
+                    description: Base64 encoded Kubeconfig for this VKE cluster. Base64
+                      encoded KubeConfig
+                    type: string
+                  nodePools:
+                    description: Contains the default node pool that was deployed.
+                    items:
+                      properties:
+                        dateCreated:
+                          description: Date of VKE cluster creation.
+                          type: string
+                        dateUpdated:
+                          description: Date of node pool updates.
+                          type: string
+                        id:
+                          description: The VKE cluster ID.
+                          type: string
+                        nodes:
+                          description: Array that contains information about nodes
+                            within this node pool.
+                          items:
+                            properties:
+                              dateCreated:
+                                description: Date of VKE cluster creation.
+                                type: string
+                              id:
+                                description: The VKE cluster ID.
+                                type: string
+                              label:
+                                description: The VKE clusters label.
+                                type: string
+                              status:
+                                description: The overall status of the cluster.
+                                type: string
+                            type: object
+                          type: array
+                        status:
+                          description: The overall status of the cluster.
+                          type: string
+                        tag:
+                          description: Tag for node pool.
+                          type: string
+                      type: object
+                    type: array
+                  serviceSubnet:
+                    description: IP range that services will run on this cluster.
+                    type: string
+                  status:
+                    description: The overall status of the cluster.
                     type: string
                 type: object
               conditions:
