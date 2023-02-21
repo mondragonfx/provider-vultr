@@ -24,10 +24,35 @@ spec:
   package: vultr/provider-vultr:v0.1.0
 EOF
 ```
+```
+git clone git@github.com:mondragonfx/provider-vultr.git
+cd provider-vultr
+```
+Apply the CRDs
+```
+kubectl apply -f package/crds
+```
 
-Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
+Run the provider:
+```
+make run
+```
 
-You can see the API reference [here](https://doc.crds.dev/github.com/vultr/provider-vultr).
+Apply ProviderConfig and example manifests (In another terminal since the previous command is blocking):
+```
+
+# Create "crossplane-system" namespace if not exists
+kubectl create namespace crossplane-system --dry-run=client -o yaml | kubectl apply -f -
+
+#Add your VULTR_API_KEY to examples/providerconfig/secret.yaml
+kubectl apply -f examples/providerconfig/
+kubectl apply -f examples/kubernetes/kubernetes.yaml
+```
+
+Observe managed resources and wait until they are ready:
+```
+watch kubectl get managed
+```
 
 ## Developing
 
