@@ -1,4 +1,4 @@
-module github.com/crossplane/upjet-provider-template
+module github.com/crossplane-contrib/provider-vultr
 
 go 1.24.7
 
