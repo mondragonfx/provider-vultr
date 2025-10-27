@@ -9,16 +9,20 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
-	resource "github.com/crossplane-contrib/provider-vultr/internal/controller/namespaced/null/resource"
+	nodepools "github.com/crossplane-contrib/provider-vultr/internal/controller/namespaced/kubernetes/nodepools"
 	providerconfig "github.com/crossplane-contrib/provider-vultr/internal/controller/namespaced/providerconfig"
+	instance "github.com/crossplane-contrib/provider-vultr/internal/controller/namespaced/vultr/instance"
+	kubernetes "github.com/crossplane-contrib/provider-vultr/internal/controller/namespaced/vultr/kubernetes"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
+		nodepools.Setup,
 		providerconfig.Setup,
+		instance.Setup,
+		kubernetes.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err
@@ -31,8 +35,10 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.SetupGated,
+		nodepools.SetupGated,
 		providerconfig.SetupGated,
+		instance.SetupGated,
+		kubernetes.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

@@ -10,9 +10,10 @@ package cluster
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-vultr/apis/cluster/null/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-vultr/apis/cluster/kubernetes/v1alpha1"
 	v1alpha1cluster "github.com/crossplane-contrib/provider-vultr/apis/cluster/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-vultr/apis/cluster/v1beta1"
+	v1alpha1vultr "github.com/crossplane-contrib/provider-vultr/apis/cluster/vultr/v1alpha1"
 )
 
 func init() {
@@ -21,6 +22,7 @@ func init() {
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1alpha1cluster.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
+		v1alpha1vultr.SchemeBuilder.AddToScheme,
 	)
 }
 

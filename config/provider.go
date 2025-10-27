@@ -6,8 +6,9 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 
-	nullCluster "github.com/crossplane-contrib/provider-vultr/config/cluster/null"
-	nullNamespaced "github.com/crossplane-contrib/provider-vultr/config/namespaced/null"
+	kubernetesCluster "github.com/crossplane-contrib/provider-vultr/config/cluster/kubernetes"
+	computeCluster "github.com/crossplane-contrib/provider-vultr/config/cluster/compute"
+	computeNamespaced "github.com/crossplane-contrib/provider-vultr/config/namespaced/compute"
 )
 
 const (
@@ -33,7 +34,8 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		nullCluster.Configure,
+		kubernetesCluster.Configure,
+		computeCluster.Configure,
 	} {
 		configure(pc)
 	}
@@ -56,8 +58,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		}))
 
 	for _, configure := range []func(provider *ujconfig.Provider){
-		// add custom config functions
-		nullNamespaced.Configure,
+		computeNamespaced.Configure,
 	} {
 		configure(pc)
 	}

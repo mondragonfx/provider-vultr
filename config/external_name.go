@@ -8,7 +8,10 @@ import (
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": idWithStub(),
+	"null_resource":               idWithStub(),
+	"vultr_kubernetes":            config.IdentifierFromProvider,
+	"vultr_kubernetes_node_pools": config.IdentifierFromProvider,
+	"vultr_instance":              config.IdentifierFromProvider,
 }
 
 func idWithStub() config.ExternalName {
