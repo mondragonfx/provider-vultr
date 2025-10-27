@@ -22,6 +22,10 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal vultr credentials as JSON"
+
+	apiKey     = "api_key"
+	rateLimit  = "rate_limit"
+	retryLimit = "retry_limit"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -51,10 +55,17 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
+		ps.Configuration = map[string]any{}
+		if v, ok := creds[apiKey]; ok {
+			ps.Configuration[apiKey] = v
+		}
+		if v, ok := creds[rateLimit]; ok {
+			ps.Configuration[rateLimit] = v
+		}
+		if v, ok := creds[retryLimit]; ok {
+			ps.Configuration[retryLimit] = v
+		}
+
 		return ps, nil
 	}
 }
