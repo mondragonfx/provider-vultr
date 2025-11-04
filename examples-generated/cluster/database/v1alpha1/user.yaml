@@ -1,4 +1,4 @@
-apiVersion: database.vultr/v1alpha1
+apiVersion: database.vultr.upbound.io/v1alpha1
 kind: User
 metadata:
   annotations:

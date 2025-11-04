@@ -1,4 +1,4 @@
-apiVersion: loadbalancer.vultr/v1alpha1
+apiVersion: loadbalancer.vultr.upbound.io/v1alpha1
 kind: LoadBalancer
 metadata:
   annotations:

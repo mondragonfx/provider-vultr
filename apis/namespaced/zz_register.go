@@ -11,28 +11,26 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 
 	v1alpha1 "github.com/crossplane-contrib/provider-vultr/apis/namespaced/baremetal/v1alpha1"
-	v1alpha1block "github.com/crossplane-contrib/provider-vultr/apis/namespaced/block/v1alpha1"
+	v1alpha1compute "github.com/crossplane-contrib/provider-vultr/apis/namespaced/compute/v1alpha1"
 	v1alpha1database "github.com/crossplane-contrib/provider-vultr/apis/namespaced/database/v1alpha1"
 	v1alpha1kubernetes "github.com/crossplane-contrib/provider-vultr/apis/namespaced/kubernetes/v1alpha1"
 	v1alpha1loadbalancer "github.com/crossplane-contrib/provider-vultr/apis/namespaced/loadbalancer/v1alpha1"
-	v1alpha1object "github.com/crossplane-contrib/provider-vultr/apis/namespaced/object/v1alpha1"
+	v1alpha1storage "github.com/crossplane-contrib/provider-vultr/apis/namespaced/storage/v1alpha1"
 	v1alpha1namespaced "github.com/crossplane-contrib/provider-vultr/apis/namespaced/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-vultr/apis/namespaced/v1beta1"
-	v1alpha1vultr "github.com/crossplane-contrib/provider-vultr/apis/namespaced/vultr/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
-		v1alpha1block.SchemeBuilder.AddToScheme,
+		v1alpha1compute.SchemeBuilder.AddToScheme,
 		v1alpha1database.SchemeBuilder.AddToScheme,
 		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
 		v1alpha1loadbalancer.SchemeBuilder.AddToScheme,
-		v1alpha1object.SchemeBuilder.AddToScheme,
+		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1namespaced.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
-		v1alpha1vultr.SchemeBuilder.AddToScheme,
 	)
 }
 

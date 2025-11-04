@@ -1,4 +1,4 @@
-apiVersion: storage.vultr/v1alpha1
+apiVersion: storage.vultr.upbound.io/v1alpha1
 kind: ObjectStorage
 metadata:
   annotations:

@@ -14,7 +14,7 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
-type NodePoolsInitParameters struct {
+type NodePoolsInitParameters_2 struct {
 
 	// Enable the auto scaler for the default node pool.
 	AutoScaler *bool `json:"autoScaler,omitempty" tf:"auto_scaler,omitempty"`
@@ -45,13 +45,34 @@ type NodePoolsInitParameters struct {
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
 	// Taints to apply to the nodes in the node pool. Should contain key, value and effect.  The effect should be one of NoSchedule, PreferNoSchedule or NoExecute.
-	Taints []TaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+	Taints []NodePoolsTaintsInitParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
-type NodePoolsObservation struct {
+type NodePoolsNodesInitParameters struct {
+}
+
+type NodePoolsNodesObservation struct {
+
+	// Date of node pool creation.
+	DateCreated *string `json:"dateCreated,omitempty" tf:"date_created,omitempty"`
+
+	// The Nodepool ID.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The label to be used as a prefix for nodes in this node pool.
+	Label *string `json:"label,omitempty" tf:"label,omitempty"`
+
+	// Status of node pool.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type NodePoolsNodesParameters struct {
+}
+
+type NodePoolsObservation_2 struct {
 
 	// Enable the auto scaler for the default node pool.
 	AutoScaler *bool `json:"autoScaler,omitempty" tf:"auto_scaler,omitempty"`
@@ -85,7 +106,7 @@ type NodePoolsObservation struct {
 	NodeQuantity *float64 `json:"nodeQuantity,omitempty" tf:"node_quantity,omitempty"`
 
 	// Array that contains information about nodes within this node pool.
-	Nodes []NodesObservation `json:"nodes,omitempty" tf:"nodes,omitempty"`
+	Nodes []NodePoolsNodesObservation `json:"nodes,omitempty" tf:"nodes,omitempty"`
 
 	// The plan to be used in this node pool. See Plans List Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan *string `json:"plan,omitempty" tf:"plan,omitempty"`
@@ -97,13 +118,13 @@ type NodePoolsObservation struct {
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
 	// Taints to apply to the nodes in the node pool. Should contain key, value and effect.  The effect should be one of NoSchedule, PreferNoSchedule or NoExecute.
-	Taints []TaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
+	Taints []NodePoolsTaintsObservation `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
-type NodePoolsParameters struct {
+type NodePoolsParameters_2 struct {
 
 	// Enable the auto scaler for the default node pool.
 	// +kubebuilder:validation:Optional
@@ -144,35 +165,14 @@ type NodePoolsParameters struct {
 
 	// Taints to apply to the nodes in the node pool. Should contain key, value and effect.  The effect should be one of NoSchedule, PreferNoSchedule or NoExecute.
 	// +kubebuilder:validation:Optional
-	Taints []TaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
+	Taints []NodePoolsTaintsParameters `json:"taints,omitempty" tf:"taints,omitempty"`
 
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
 	// +kubebuilder:validation:Optional
 	UserData *string `json:"userData,omitempty" tf:"user_data,omitempty"`
 }
 
-type NodesInitParameters struct {
-}
-
-type NodesObservation struct {
-
-	// Date of node pool creation.
-	DateCreated *string `json:"dateCreated,omitempty" tf:"date_created,omitempty"`
-
-	// The Nodepool ID.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// The label to be used as a prefix for nodes in this node pool.
-	Label *string `json:"label,omitempty" tf:"label,omitempty"`
-
-	// Status of node pool.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-}
-
-type NodesParameters struct {
-}
-
-type TaintsInitParameters struct {
+type NodePoolsTaintsInitParameters struct {
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
@@ -180,7 +180,7 @@ type TaintsInitParameters struct {
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type TaintsObservation struct {
+type NodePoolsTaintsObservation struct {
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
@@ -188,7 +188,7 @@ type TaintsObservation struct {
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
-type TaintsParameters struct {
+type NodePoolsTaintsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Effect *string `json:"effect" tf:"effect,omitempty"`
@@ -203,7 +203,7 @@ type TaintsParameters struct {
 // NodePoolsSpec defines the desired state of NodePools
 type NodePoolsSpec struct {
 	v2.ManagedResourceSpec `json:",inline"`
-	ForProvider            NodePoolsParameters `json:"forProvider"`
+	ForProvider            NodePoolsParameters_2 `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -214,13 +214,13 @@ type NodePoolsSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider NodePoolsInitParameters `json:"initProvider,omitempty"`
+	InitProvider NodePoolsInitParameters_2 `json:"initProvider,omitempty"`
 }
 
 // NodePoolsStatus defines the observed state of NodePools.
 type NodePoolsStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        NodePoolsObservation `json:"atProvider,omitempty"`
+	AtProvider        NodePoolsObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

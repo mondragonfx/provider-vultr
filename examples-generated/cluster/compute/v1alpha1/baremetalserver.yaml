@@ -1,4 +1,4 @@
-apiVersion: compute.vultr/v1alpha1
+apiVersion: compute.vultr.upbound.io/v1alpha1
 kind: BareMetalServer
 metadata:
   annotations:
