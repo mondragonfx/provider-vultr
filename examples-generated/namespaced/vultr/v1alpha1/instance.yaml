@@ -1,4 +1,4 @@
-apiVersion: vultr.vultr.m./v1alpha1
+apiVersion: vultr.vultr.m/v1alpha1
 kind: Instance
 metadata:
   annotations:

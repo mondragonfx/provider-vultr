@@ -1,4 +1,4 @@
-apiVersion: kubernetes.vultr./v1alpha1
+apiVersion: kubernetes.vultr/v1alpha1
 kind: Kubernetes
 metadata:
   annotations:

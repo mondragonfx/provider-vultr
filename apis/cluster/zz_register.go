@@ -10,19 +10,25 @@ package cluster
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-vultr/apis/cluster/kubernetes/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-vultr/apis/cluster/compute/v1alpha1"
+	v1alpha1database "github.com/crossplane-contrib/provider-vultr/apis/cluster/database/v1alpha1"
+	v1alpha1kubernetes "github.com/crossplane-contrib/provider-vultr/apis/cluster/kubernetes/v1alpha1"
+	v1alpha1loadbalancer "github.com/crossplane-contrib/provider-vultr/apis/cluster/loadbalancer/v1alpha1"
+	v1alpha1storage "github.com/crossplane-contrib/provider-vultr/apis/cluster/storage/v1alpha1"
 	v1alpha1cluster "github.com/crossplane-contrib/provider-vultr/apis/cluster/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-vultr/apis/cluster/v1beta1"
-	v1alpha1vultr "github.com/crossplane-contrib/provider-vultr/apis/cluster/vultr/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1database.SchemeBuilder.AddToScheme,
+		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
+		v1alpha1loadbalancer.SchemeBuilder.AddToScheme,
+		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1cluster.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
-		v1alpha1vultr.SchemeBuilder.AddToScheme,
 	)
 }
 
